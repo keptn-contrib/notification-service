@@ -50,7 +50,8 @@ export abstract class Notification implements INotification {
         throw new Error('MISSING');
       }
 
-      const message: IncomingWebhookSendArguments = {
+      // TODO update once https://github.com/slackapi/node-slack-sdk/pull/807 is available
+      const message: any = {
         text: this.defaultNotification.title,
         blocks: [
           {
@@ -66,7 +67,6 @@ export abstract class Notification implements INotification {
               type: 'mrkdwn',
               text: `*${f.name}*:\n${f.value}`,
             })),
-            // TODO improve
             accessory: this.defaultNotification.image
               ? {
                   type: 'image',
