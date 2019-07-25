@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  namespace: keptn
+spec:
+  selector:
+    matchLabels:
+      run: notification-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: notification-service
+    spec:
+      containers:
+      - name: notification-service
+        image: robjahn/notification-service:1
+        imagePullPolicy: Always
+        env:
+        - name: TEAMS_URL
+          value: ""
+        - name: BRIDGE_URL
+          value: ""
+        - name: SLACK_URL
+          value: ""
+        - name: LOG_LEVEL
+          value: "info"
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  namespace: keptn
+  labels:
+    run: notification-service
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    run: notification-service
