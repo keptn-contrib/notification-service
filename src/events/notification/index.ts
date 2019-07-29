@@ -75,20 +75,6 @@ export abstract class Notification implements INotification {
                 }
               : undefined,
           },
-          {
-            type: 'actions',
-            elements: [
-              {
-                type: 'button',
-                text: {
-                  type: 'plain_text',
-                  text: 'View Keptn Context',
-                },
-                // TODO generate Keptn context URL
-                url: 'https://dynatrace.com',
-              },
-            ],
-          },
         ],
       };
       return message;
@@ -117,17 +103,6 @@ export abstract class Notification implements INotification {
           },
         ],
         'potentialAction': [
-          {
-            '@type': 'OpenUri',
-            'name': 'View Keptn Context',
-            'targets': [
-              {
-                os: 'default',
-                // TODO change
-                uri: 'https://dynatrace.com',
-              },
-            ],
-          },
         ],
       };
       return message;
