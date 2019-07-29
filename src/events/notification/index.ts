@@ -50,7 +50,8 @@ export abstract class Notification implements INotification {
         throw new Error('MISSING');
       }
 
-      const message: IncomingWebhookSendArguments = {
+      // TODO update once https://github.com/slackapi/node-slack-sdk/pull/807 is available
+      const message: any = {
         text: this.defaultNotification.title,
         blocks: [
           {
@@ -66,7 +67,6 @@ export abstract class Notification implements INotification {
               type: 'mrkdwn',
               text: `*${f.name}*:\n${f.value}`,
             })),
-            // TODO improve
             accessory: this.defaultNotification.image
               ? {
                   type: 'image',
@@ -74,20 +74,6 @@ export abstract class Notification implements INotification {
                   alt_text: 'Keptn',
                 }
               : undefined,
-          },
-          {
-            type: 'actions',
-            elements: [
-              {
-                type: 'button',
-                text: {
-                  type: 'plain_text',
-                  text: 'View Keptn Context',
-                },
-                // TODO generate Keptn context URL
-                url: 'https://dynatrace.com',
-              },
-            ],
           },
         ],
       };
@@ -117,17 +103,6 @@ export abstract class Notification implements INotification {
           },
         ],
         'potentialAction': [
-          {
-            '@type': 'OpenUri',
-            'name': 'View Keptn Context',
-            'targets': [
-              {
-                os: 'default',
-                // TODO change
-                uri: 'https://dynatrace.com',
-              },
-            ],
-          },
         ],
       };
       return message;

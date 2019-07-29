@@ -14,7 +14,7 @@ export class SubscriberService {
     @Inject('winston') private readonly logger: Logger,
     @InjectConfig() private readonly config: ConfigService,
   ) {
-    this.logger.debug('loading subscribers');
+    this.logger.debug('SubscriberService constructor. Loading subscribers');
 
     const slackUrl = this.config.get('url.slack');
     this.logger.info(`The slack URL is ${slackUrl}`);
@@ -28,7 +28,7 @@ export class SubscriberService {
       this.subscribers.push(new Teams(teamsUrl));
     }
 
-    this.logger.debug(`Finished loading ${this.subscribers.length} subscribers`);
+    this.logger.debug(`SubscriberService constructor. Finished loading ${this.subscribers.length} subscribers`);
   }
 
   getSubscribers(): ISubscription[] {
