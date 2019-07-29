@@ -65,7 +65,7 @@ export abstract class Notification implements INotification {
             type: 'section',
             fields: this.defaultNotification.facts.map(f => ({
               type: 'mrkdwn',
-              text: `*${f.name}*:\n${f.value}`,
+              text: `*${f.name}*:\n${this.sanitizeValue(f.value)}`,
             })),
             accessory: this.defaultNotification.image
               ? {
@@ -99,7 +99,7 @@ export abstract class Notification implements INotification {
         'title': this.defaultNotification.title,
         'sections': [
           {
-            facts: this.defaultNotification.facts.map(f => ({name: `${f.name}:`, value: f.value })),
+            facts: this.defaultNotification.facts.map(f => ({name: `${f.name}:`, value: this.sanitizeValue(f.value) })),
           },
         ],
         'potentialAction': [
@@ -108,5 +108,10 @@ export abstract class Notification implements INotification {
       return message;
     }
     return this.teamsNotification;
+  }
+
+  private sanitizeValue(value: string): string {
+    return value
+      .replace(/_/g, " ")
   }
 }
