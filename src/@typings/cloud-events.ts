@@ -63,7 +63,7 @@ export type EvaluationDone = Base<{
   tag: string;
   evaluationpassed: any;
   // Evaluation Details isn't strictly typed
-  evaluationdetails: unknown ;
+  evaluationdetails: unknown;
 }>;
 
 export type Problem = Base<{
