@@ -1,5 +1,5 @@
 export const enum CloudEventType {
-  NewArtefact = 'sh.keptn.events.new-artefact',
+  NewArtifact = 'sh.keptn.events.new-artifact',
   ConfigurationChanged = 'sh.keptn.events.configuration-changed',
   DeploymentFinished = 'sh.keptn.events.deployment-finished',
   TestsFinished = 'sh.keptn.events.tests-finished',
@@ -7,7 +7,7 @@ export const enum CloudEventType {
   Problem = 'sh.keptn.events.problem',
 }
 
-export type NewArtefact = Base<{
+export type NewArtifact = Base<{
   githuborg: string;
   project: string;
   teststrategy: string;
@@ -16,6 +16,7 @@ export type NewArtefact = Base<{
   service: string;
   image: string;
   tag: string;
+  
 }>;
 
 export type ConfigurationChanged = Base<{
@@ -60,9 +61,9 @@ export type EvaluationDone = Base<{
   service: string;
   image: string;
   tag: string;
-  evaluationpassed: boolean;
+  evaluationpassed: any;
   // Evaluation Details isn't strictly typed
-  evaluationdetails: unknown;
+  evaluationdetails: unknown ;
 }>;
 
 export type Problem = Base<{
@@ -89,5 +90,6 @@ export interface CloudEvent {
 
 interface Base<D> extends CloudEvent {
   type: CloudEventType;
+  shkeptncontext: string;
   data: D;
 }
