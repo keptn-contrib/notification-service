@@ -95,15 +95,17 @@ export abstract class Notification implements INotification {
       const message: IMessageCard = {
         '@type': 'MessageCard',
         '@context': 'https://schema.org/extensions',
-        'summary': this.defaultNotification.title,
-        'title': this.defaultNotification.title,
-        'sections': [
+        summary: this.defaultNotification.title,
+        title: this.defaultNotification.title,
+        sections: [
           {
-            facts: this.defaultNotification.facts.map(f => ({name: `${f.name}:`, value: this.sanitizeValue(f.value) })),
+            facts: this.defaultNotification.facts.map(f => ({
+              name: `${f.name}:`,
+              value: this.sanitizeValue(f.value),
+            })),
           },
         ],
-        'potentialAction': [
-        ],
+        potentialAction: [],
       };
       return message;
     }
@@ -111,7 +113,6 @@ export abstract class Notification implements INotification {
   }
 
   private sanitizeValue(value: string): string {
-    return value
-      .replace(/_/g, " ")
+    return value.replace(/_/g, ' ');
   }
 }
