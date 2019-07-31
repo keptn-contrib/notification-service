@@ -14,7 +14,7 @@ export class Teams implements ISubscription {
         json: true,
         body,
       });
-      console.log(response);
+      console.log('getTeamsNotification ' + body.summary + ' response: ' + response);
     } catch (err) {
       console.error(err);
     }

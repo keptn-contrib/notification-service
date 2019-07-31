@@ -18,7 +18,7 @@ export class Slack implements ISubscription {
         notification.getSlackNotification(),
       );
       // log
-      console.log(response.text);
+      console.log('getSlackNotification ' + notification.getSlackNotification().text + ' response: ' + response.text);
     } catch (err) {
       console.error(err);
     }
