@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "2bb7aba7-e7de-4c39-9956-e666b0c0cbd6",
+		"name": "keptn-notifications",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "new-artifact",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/cloudevents+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \n   \"specversion\":\"0.2\",\n   \"type\":\"sh.keptn.events.new-artifact\",\n   \"id\":\"1234\",\n   \"time\":\"2018-04-05T17:31:00Z\",\n   \"contenttype\":\"application/json\",\n   \"shkeptncontext\":\"db51be80-4fee-41af-bb53-1b093d2b694c\",\n   \"data\":{  \n      \"githuborg\":\"myorg\",\n      \"project\":\"notification_testing\",\n      \"teststrategy\":\"functional\",\n      \"deploymentstrategy\":\"direct\",\n      \"stage\":\"dev\",\n      \"service\":\"carts\",\n      \"image\":\"testregistry/carts\",\n      \"tag\":\"0.1.0\"\n   }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "configuration-changed",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/cloudevents+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \n   \"specversion\":\"0.2\",\n   \"time\":\"2018-04-05T17:31:00Z\",\n   \"contenttype\":\"application/json\",\n   \"data\":{  \n      \"githuborg\":\"myorg\",\n      \"project\":\"notification_testing\",\n      \"teststrategy\":\"functional\",\n      \"deploymentstrategy\":\"direct\",\n      \"stage\":\"dev\",\n      \"service\":\"carts\",\n      \"image\":\"testregistry/carts\",\n      \"tag\":\"0.1.0\"\n   },\n   \"type\":\"sh.keptn.events.configuration-changed\",\n   \"shkeptncontext\":\"db51be80-4fee-41af-bb53-1b093d2b694c\"\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deployment-finished",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/cloudevents+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \n   \"specversion\":\"0.2\",\n   \"type\":\"sh.keptn.events.deployment-finished\",\n   \"id\":\"1234\",\n   \"time\":\"2018-04-05T17:31:00Z\",\n   \"contenttype\":\"application/json\",\n   \"shkeptncontext\":\"db51be80-4fee-41af-bb53-1b093d2b694c\",\n   \"data\":{  \n      \"githuborg\":\"myorg\",\n      \"project\":\"notification_testing\",\n      \"teststrategy\":\"functional\",\n      \"deploymentstrategy\":\"direct\",\n      \"stage\":\"dev\",\n      \"service\":\"carts\",\n      \"image\":\"testregistry/carts\",\n      \"tag\":\"0.1.0\"\n   }\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "tests-finished",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/cloudevents+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \n   \"specversion\":\"0.2\",\n   \"type\":\"sh.keptn.events.tests-finished\",\n   \"id\":\"1234\",\n   \"time\":\"2018-04-05T17:31:00Z\",\n   \"contenttype\":\"application/json\",\n   \"shkeptncontext\":\"db51be80-4fee-41af-bb53-1b093d2b694c\",\n   \"data\":{  \n      \"githuborg\":\"myorg\",\n      \"project\":\"notification_testing\",\n      \"teststrategy\":\"functional\",\n      \"deploymentstrategy\":\"direct\",\n      \"stage\":\"dev\",\n      \"service\":\"carts\",\n      \"image\":\"testregistry/carts\",\n      \"tag\":\"0.1.0\"\n   }\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "evaluation-done",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/cloudevents+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \n   \"specversion\":\"0.2\",\n   \"type\":\"sh.keptn.events.evaluation-done\",\n   \"id\":\"1234\",\n   \"time\":\"2018-04-05T17:31:00Z\",\n   \"contenttype\":\"application/json\",\n   \"shkeptncontext\":\"db51be80-4fee-41af-bb53-1b093d2b694c\",\n   \"data\":{  \n      \"githuborg\":\"myorg\",\n      \"project\":\"notification_testing\",\n      \"teststrategy\":\"functional\",\n      \"deploymentstrategy\":\"direct\",\n      \"stage\":\"dev\",\n      \"service\":\"carts\",\n      \"image\":\"testregistry/carts\",\n      \"tag\":\"0.1.0\"\n      \"evaluationpassed\": true,\n      \"evaluationdetails\": {\n        \"options\":{\n            \"timeStart\":1557838126,\n            \"timeEnd\":1557838317\n        },\n        \"totalScore\":100,\n        \"objectives\":{\n            \"pass\":90,\n            \"warning\":75\n        },\n        \"indicatorResults\":[\n            {\n              \"id\":\"ResponseTime_Backend\",\n              \"violations\":[\n\n              ],\n              \"score\":100\n            }\n        ],\n        \"result\":\"pass\"\n      },\n      \"tag\":\"0.6.7-16\"\n   }\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "problem",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/cloudevents+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"specversion\": \"0.2\",\n\t\"type\": \"sh.keptn.events.problem\",\n\t\"source\": \"dynatrace\",\n\t\"id\": \"{PID}\",\n\t\"time\": \"2018-04-05T17:31:00Z\",\n\t\"contenttype\": \"application/json\",\n\t\"shkeptncontext\": \"db51be80-4fee-41af-bb53-1b093d2b694c\",\n\t\"data\": {\n\t\t\"State\": \"OPEN\",\n\t\t\"ProblemID\": \"12345\",\n\t\t\"PID\": \"9999\",\n\t\t\"ProblemTitle\": \"This is a test problem\",\n\t\t\"ProblemDetails\": {\n\t\t\t\"ProblemDetailsJSON\": \"ProblemDetailsJSON\"\n\t\t},\n\t\t\"ImpactedEntities\": {\n\t\t\t\"ImpactedEntities\": [{\n\t\t\t\t\"type \": \"HOST \",\n\t\t\t\t\"name\": \"MyHost1 \",\n\t\t\t\t\"entity\": \"HOST - XXXXXXXXXXXXX\"\n\t\t\t}, {\n\t\t\t\t\"type\": \"SERVICE \",\n\t\t\t\t\"name\": \"MyService1\",\n\t\t\t\t\"entity\": \"SERVICE - XXXXXXXXXXXXX\"\n\t\t\t}]\n\t\t},\n\t\t\"ImpactedEntity\": \"MyHost1, MyService1\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080"
+				}
+			},
+			"response": []
+		}
+	]
+}
