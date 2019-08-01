@@ -19,13 +19,13 @@ export class SubscriberService {
     const slackUrl = this.config.get('url.slack');
     this.logger.info(`The slack URL is ${slackUrl}`);
     if (slackUrl) {
-      this.subscribers.push(new Slack(slackUrl));
+      this.subscribers.push(new Slack(logger, slackUrl));
     }
 
     const teamsUrl = this.config.get('url.teams');
     this.logger.info(`The teams URL is ${teamsUrl}`);
     if (teamsUrl) {
-      this.subscribers.push(new Teams(teamsUrl));
+      this.subscribers.push(new Teams(logger, teamsUrl));
     }
 
     this.logger.debug(`SubscriberService constructor. Finished loading ${this.subscribers.length} subscribers`);
