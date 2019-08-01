@@ -66,7 +66,7 @@ export abstract class Notification implements INotification {
             type: 'section',
             fields: this.defaultNotification.facts.map(f => ({
               type: 'mrkdwn',
-              text: `*${f.name}*: ${this.sanitizeValue(f.value)}`,
+              text: `*${f.name}*: ` + '`' + `${this.sanitizeValue(f.value)}` + '`',
             })),
             accessory: this.defaultNotification.image
               ? {
@@ -75,7 +75,7 @@ export abstract class Notification implements INotification {
                   alt_text: 'Keptn',
                 }
               : undefined,
-          },
+          }
         ],
       };
       return message;
@@ -117,9 +117,6 @@ export abstract class Notification implements INotification {
     if (typeof value == 'string') {
       return value.replace(/_/g, ' ');
     }
-    else 
-    {
-      return value;
-    }
+    return value;
   }
 }
