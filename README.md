@@ -62,7 +62,9 @@ it will send various cloud events like "new-artifact" and "deployment-finished"
 
 ## Testing
 
-Using a tool like Postman, send a request with the following values.
+You can use the PostMan collection JSON file ```keptn-notifications.postman_collection.json``` in this repo to test all the events.
+
+To manually setup a request in a tool like Postman, use the following values.
 * URL = ```http://localhost:8080```
 * Content-Type = application/cloudevents+json
 * Type = POST

@@ -51,6 +51,7 @@ export abstract class Notification implements INotification {
       }
 
       // TODO update once https://github.com/slackapi/node-slack-sdk/pull/807 is available
+      // https://api.slack.com/reference/messaging/blocks
       const message: any = {
         text: this.defaultNotification.title,
         blocks: [
@@ -58,14 +59,14 @@ export abstract class Notification implements INotification {
             type: 'section',
             text: {
               type: 'mrkdwn',
-              text: this.defaultNotification.title,
+              text: '*' + this.defaultNotification.title + '*',
             },
           },
           {
             type: 'section',
             fields: this.defaultNotification.facts.map(f => ({
               type: 'mrkdwn',
-              text: `*${f.name}*:\n${f.value}`,
+              text: `*${f.name}*: ` + '`' + `${this.sanitizeValue(f.value)}` + '`',
             })),
             accessory: this.defaultNotification.image
               ? {
@@ -74,7 +75,7 @@ export abstract class Notification implements INotification {
                   alt_text: 'Keptn',
                 }
               : undefined,
-          },
+          }
         ],
       };
       return message;
@@ -95,18 +96,27 @@ export abstract class Notification implements INotification {
       const message: IMessageCard = {
         '@type': 'MessageCard',
         '@context': 'https://schema.org/extensions',
-        'summary': this.defaultNotification.title,
-        'title': this.defaultNotification.title,
-        'sections': [
+        summary: this.defaultNotification.title,
+        title: this.defaultNotification.title,
+        sections: [
           {
-            facts: this.defaultNotification.facts.map(f => ({name: `${f.name}:`, value: f.value })),
+            facts: this.defaultNotification.facts.map(f => ({
+              name: `${f.name}:`,
+              value: this.sanitizeValue(f.value),
+            })),
           },
         ],
-        'potentialAction': [
-        ],
+        potentialAction: [],
       };
       return message;
     }
     return this.teamsNotification;
+  }
+
+  private sanitizeValue(value: string): string {
+    if (typeof value == 'string') {
+      return value.replace(/_/g, ' ');
+    }
+    return value;
   }
 }
