@@ -1,50 +1,62 @@
-import { Notification, IDefaultNotification } from './index';
+import { Notification } from './index';
 import { EvaluationDone } from '../../@typings/cloud-events';
 
 export class EvaluationDoneNotification extends Notification {
-  constructor(private readonly evaluationDone: EvaluationDone) {
-    super();
-  }
+  constructor(evaluationDone: EvaluationDone) {
+    super(evaluationDone);
 
-  defaultNotification: IDefaultNotification = {
-    title: 'EVALUATION DONE',
-    facts: [
-      { 
-        name: 'Project',
-        value: this.evaluationDone.data.project
-      },
-      {
-        name: 'Stage',
-        value: this.evaluationDone.data.stage
-      },
-      { 
-        name: 'Service',
-        value: this.evaluationDone.data.service
-      },
-      {
-        name: 'Image',
-        value: this.evaluationDone.data.image
-      },
-      { 
-        name: 'Tag',
-        value: this.evaluationDone.data.tag
-      },
-      { 
-        name: 'Evaluation passed',
-        value: this.evaluationDone.data.evaluationpassed
-      },
-      { 
-        name: 'Deployment Stategy',
-        value: this.evaluationDone.data.deploymentstrategy
-      },
-      { 
-        name: 'Test Strategy',
-        value: this.evaluationDone.data.teststrategy
-      },
-      {
-        name: 'Keptn context',
-        value: this.evaluationDone.shkeptncontext
-      }
-    ],
+    this.defaultNotification = {
+      title: 'EVALUATION DONE',
+      facts: [
+        {
+          name: 'Project',
+          value: evaluationDone.data.project
+        },
+        {
+          name: 'Stage',
+          value: evaluationDone.data.stage
+        },
+        {
+          name: 'Service',
+          value: evaluationDone.data.service
+        },
+        {
+          name: 'Image',
+          value: evaluationDone.data.image
+        },
+        {
+          name: 'Tag',
+          value: evaluationDone.data.tag
+        },
+        {
+          name: 'Evaluation passed',
+          value: evaluationDone.data.evaluationpassed.toString()
+        },
+        {
+          name: 'Deployment Strategy',
+          value: evaluationDone.data.deploymentstrategy
+        },
+        {
+          name: 'Test Strategy',
+          value: evaluationDone.data.teststrategy
+        },
+      ],
+    };
+
+    if (evaluationDone.data.evaluationdetails.objectives) {
+      const pass = evaluationDone.data.evaluationdetails.objectives.pass || "N/A";
+      const warn = evaluationDone.data.evaluationdetails.objectives.warning || "N/A"
+      this.defaultNotification.facts.push({
+        name: 'Objectives',
+        value: `Pass: ${pass}, Warn: ${warn}`
+      })
+    }
+
+    if (evaluationDone.data.evaluationdetails.totalScore) {
+      this.defaultNotification.facts.push({
+        name: 'Total Score',
+        value: evaluationDone.data.evaluationdetails.totalScore.toString()
+      })
+    }
   };
 }

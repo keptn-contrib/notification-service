@@ -28,7 +28,6 @@ export class EventsController {
   getEvent(@Body() cloudEvent: CloudEvent) {
 
     this.logger.debug('EventsController.getEvent() post received');
-    this.logger.debug('EventsController.getEvent() payload: ' + JSON.stringify(cloudEvent));
     const message = this.createCloudEventServiceFactory(cloudEvent);
     const subscribers = this.subscriberService.getSubscribers();
 

@@ -1,6 +1,7 @@
 import { ISubscription } from '../../subscribers/subscriber.type';
 import { IncomingWebhookSendArguments } from '@slack/webhook';
 import { IMessageCard } from '../../@typings/message-card';
+import { CloudEvent } from "../../@typings/cloud-events";
 
 export interface INotification {
   notify(subscriptions: ISubscription[]): Promise<void>;
@@ -13,6 +14,11 @@ export interface IDefaultNotification {
 }
 
 export abstract class Notification implements INotification {
+  public readonly context: string;
+
+  public constructor(event: CloudEvent) {
+    this.context = event.shkeptncontext;
+  }
   /**
    * A type guard that can be used to add typing to a CloudEvent. It's working
    * under the assumption that if the event name passes, the rest of the event
@@ -70,11 +76,20 @@ export abstract class Notification implements INotification {
             })),
             accessory: this.defaultNotification.image
               ? {
-                  type: 'image',
-                  image_url: this.defaultNotification.image,
-                  alt_text: 'Keptn',
-                }
+                type: 'image',
+                image_url: this.defaultNotification.image,
+                alt_text: 'Keptn',
+              }
               : undefined,
+          },
+          {
+            type: 'context',
+            elements: [
+              {
+                "type": "mrkdwn",
+                "text": `Keptn Context: ${this.context}`
+              }
+            ]
           }
         ],
       };
@@ -105,6 +120,9 @@ export abstract class Notification implements INotification {
               value: this.sanitizeValue(f.value),
             })),
           },
+          {
+            activitySubtitle: `Keptn Context: ${this.context}`,
+          }
         ],
         potentialAction: [],
       };
