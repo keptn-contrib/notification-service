@@ -11,6 +11,8 @@ export interface IDefaultNotification {
   title: string;
   facts: Array<{ name: string; value: string }>;
   image?: string;
+  teamsThemeColor?: string;
+  slackEmoji?: string;
 }
 
 export abstract class Notification implements INotification {
@@ -72,7 +74,7 @@ export abstract class Notification implements INotification {
             type: 'section',
             fields: this.defaultNotification.facts.map(f => ({
               type: 'mrkdwn',
-              text: `*${f.name}*: ` + '`' + `${this.sanitizeValue(f.value)}` + '`',
+              text: `*${f.name}*: ${this.formatForSlack(f.name, this.sanitizeValue(f.value)) }`,
             })),
             accessory: this.defaultNotification.image
               ? {
@@ -113,6 +115,7 @@ export abstract class Notification implements INotification {
         '@context': 'https://schema.org/extensions',
         summary: this.defaultNotification.title,
         title: this.defaultNotification.title,
+        themeColor: this.defaultNotification.teamsThemeColor,
         sections: [
           {
             facts: this.defaultNotification.facts.map(f => ({
@@ -132,8 +135,33 @@ export abstract class Notification implements INotification {
   }
 
   private sanitizeValue(value: string): string {
+    // do this so that null values can still be displayed
     if (typeof value == 'string') {
       return value.replace(/_/g, ' ');
+    }
+    return value;
+  }
+
+  private formatForSlack(key: string, value: string): string {
+    // replace teams formatting for bold formatting and emojis
+    value = value.replace(/<BR>/gi, '\n');
+    value = value.replace(/\*\*/g, '*');
+
+    // add markup formatting for all values except results
+    // because the formatting in this value field has formatting
+    // that will not render properly with markup tags
+    if (!key.startsWith('Indicator Results')) {
+      value = "`" + value + "`"
+    }
+
+    // add the closure markup tag too so emojis renders
+    // replacement assumed emoji is at the end of the line
+    value = value.replace(/&#x1F44D;`/g, '`:thumbsup:');
+    value = value.replace(/&#x26D4;`/g, '`:no_entry:');
+
+    // slack has 2000 character message limit and wont show if longer
+    if (value.length > 2000) {
+      value = value.substring(1,1990) + "...(more)..."
     }
     return value;
   }

@@ -22,22 +22,21 @@ export class NewArtifactNotification extends Notification {
         },
         {
           name: 'Image',
-          value: newArtifact.data.image
-        },
-        { 
-          name: 'Tag',
-          value: newArtifact.data.tag
+          value: newArtifact.data.image + ":" + newArtifact.data.tag
         },
         { 
           name: 'Deployment Strategy',
           value: newArtifact.data.deploymentstrategy
-        },
-        { 
-          name: 'Test Strategy',
-          value: newArtifact.data.teststrategy
-        },
+        }
       ],
     };
+
+    if (newArtifact.data.teststrategy) {
+      this.defaultNotification.facts.push({
+        name: 'Test Strategy',
+        value: newArtifact.data.teststrategy
+      })
+    }
   }
 
 

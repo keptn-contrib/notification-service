@@ -22,23 +22,21 @@ export class ConfigurationChangedNotification extends Notification {
         },
         {
           name: 'Image',
-          value: configurationChanged.data.image
-        },
-        { 
-          name: 'Tag',
-          value: configurationChanged.data.tag
+          value: configurationChanged.data.image + ":" + configurationChanged.data.tag
         },
         { 
           name: 'Deployment Strategy',
           value: configurationChanged.data.deploymentstrategy
-        },
-        { 
-          name: 'Test Strategy',
-          value: configurationChanged.data.teststrategy
-        },
+        }
       ],
     };
-  }
 
- 
+    if (configurationChanged.data.teststrategy) {
+      this.defaultNotification.facts.push({
+        name: 'Test Strategy',
+        value: configurationChanged.data.teststrategy
+      })
+    }
+
+  }
 }

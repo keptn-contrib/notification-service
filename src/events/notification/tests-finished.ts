@@ -22,11 +22,7 @@ export class TestsFinishedNotification extends Notification {
         },
         {
           name: 'Image',
-          value: testsFinished.data.image
-        },
-        { 
-          name: 'Tag',
-          value: testsFinished.data.tag
+          value: testsFinished.data.image + ":" + testsFinished.data.tag
         },
         { 
           name: 'Deployment Strategy',

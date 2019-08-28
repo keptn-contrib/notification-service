@@ -1,5 +1,6 @@
 import { Notification } from './index';
 import { EvaluationDone } from '../../@typings/cloud-events';
+var constants = require("constants");
 
 export class EvaluationDoneNotification extends Notification {
   constructor(evaluationDone: EvaluationDone) {
@@ -22,27 +23,44 @@ export class EvaluationDoneNotification extends Notification {
         },
         {
           name: 'Image',
-          value: evaluationDone.data.image
-        },
-        {
-          name: 'Tag',
-          value: evaluationDone.data.tag
-        },
-        {
-          name: 'Evaluation passed',
-          value: evaluationDone.data.evaluationpassed.toString()
+          value: evaluationDone.data.image + ":" + evaluationDone.data.tag
         },
         {
           name: 'Deployment Strategy',
           value: evaluationDone.data.deploymentstrategy
-        },
-        {
-          name: 'Test Strategy',
-          value: evaluationDone.data.teststrategy
-        },
+        }
       ],
     };
 
+    if (evaluationDone.data.teststrategy) {
+      this.defaultNotification.facts.push({
+        name: 'Test Strategy',
+        value: evaluationDone.data.teststrategy
+      })
+    }
+
+    // add an emoji and color based on evaluationpassed value
+    var evaluationpassed_value = ''
+    if (evaluationDone.data.evaluationpassed) {
+      this.defaultNotification.teamsThemeColor = "31cc62";  // green
+      evaluationpassed_value += "true  &#x1F44D;"  // unicode for thumbsup
+    }
+    else {
+      this.defaultNotification.teamsThemeColor = "ed1909";  // red
+      evaluationpassed_value += "false  &#x26D4;" // unicode for no_entry
+    }
+    this.defaultNotification.facts.push({
+      name: 'Evaluation passed',
+      value: evaluationpassed_value
+    })
+  
+    if (evaluationDone.data.evaluationdetails.totalScore) {
+      this.defaultNotification.facts.push({
+        name: 'Total Score',
+        value: evaluationDone.data.evaluationdetails.totalScore.toString()
+      })
+    }
+    
     if (evaluationDone.data.evaluationdetails.objectives) {
       const pass = evaluationDone.data.evaluationdetails.objectives.pass || "N/A";
       const warn = evaluationDone.data.evaluationdetails.objectives.warning || "N/A"
@@ -51,12 +69,25 @@ export class EvaluationDoneNotification extends Notification {
         value: `Pass: ${pass}, Warn: ${warn}`
       })
     }
-
-    if (evaluationDone.data.evaluationdetails.totalScore) {
+    
+    // this formatting is for teams. index.js will correct formatting to work in slack
+    var facts_value = '', id, score, violations
+    if (evaluationDone.data.evaluationdetails.indicatorResults) {
+      for(let i = 0; i < evaluationDone.data.evaluationdetails.indicatorResults.length; i++){
+        id = evaluationDone.data.evaluationdetails.indicatorResults[i].id
+        score = evaluationDone.data.evaluationdetails.indicatorResults[i].score
+        violations = JSON.stringify(evaluationDone.data.evaluationdetails.indicatorResults[i].violations)
+        facts_value += `**${id}**:  **score:** ${score}`
+        if (violations != "[]") {
+          facts_value += `, **violations:**<br>${violations}`
+        }
+        facts_value += "<br>"
+      }  
       this.defaultNotification.facts.push({
-        name: 'Total Score',
-        value: evaluationDone.data.evaluationdetails.totalScore.toString()
+        name: 'Indicator Results',
+        value: facts_value
       })
     }
+
   };
 }

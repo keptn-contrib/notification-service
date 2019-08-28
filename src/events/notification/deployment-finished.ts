@@ -22,22 +22,21 @@ export class DeploymentFinishedNotification extends Notification {
         },
         {
           name: 'Image',
-          value: deploymentFinished.data.image
-        },
-        { 
-          name: 'Tag',
-          value: deploymentFinished.data.tag
+          value: deploymentFinished.data.image + ":" + deploymentFinished.data.tag
         },
         { 
           name: 'Deployment Strategy',
           value: deploymentFinished.data.deploymentstrategy
-        },
-        { 
-          name: 'Test Strategy',
-          value: deploymentFinished.data.teststrategy
-        },
+        }
       ],
     };
+
+    if (deploymentFinished.data.teststrategy) {
+      this.defaultNotification.facts.push({
+        name: 'Test Strategy',
+        value: deploymentFinished.data.teststrategy
+      })
+    }
   }
 
 
