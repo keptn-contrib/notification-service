@@ -54,10 +54,17 @@ export class EvaluationDoneNotification extends Notification {
       value: evaluationpassed_value
     })
   
+    var totalScoreValue = ''
+    if (evaluationDone.data.evaluationdetails.totalScore == 0) {
+      totalScoreValue = '0'
+    }
     if (evaluationDone.data.evaluationdetails.totalScore) {
+      totalScoreValue = evaluationDone.data.evaluationdetails.totalScore.toString()
+    }
+    if (totalScoreValue != '') {
       this.defaultNotification.facts.push({
         name: 'Total Score',
-        value: evaluationDone.data.evaluationdetails.totalScore.toString()
+        value: totalScoreValue
       })
     }
     
