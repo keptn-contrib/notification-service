@@ -10,7 +10,6 @@ export class Teams implements ISubscription {
   public async send(notification: Notification): Promise<void> {
     try {
       const body = notification.getTeamsNotification();
-      this.logger.debug('getTeamsNotification body: ' + JSON.stringify(body))
       const response = await rp(this.url, {
         method: 'POST',
         json: true,

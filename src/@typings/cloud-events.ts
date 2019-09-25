@@ -16,7 +16,7 @@ export type NewArtifact = Base<{
   service: string;
   image: string;
   tag: string;
-  
+
 }>;
 
 export type ConfigurationChanged = Base<{
@@ -61,9 +61,30 @@ export type EvaluationDone = Base<{
   service: string;
   image: string;
   tag: string;
-  evaluationpassed: any;
+  evaluationpassed: boolean;
   // Evaluation Details isn't strictly typed
-  evaluationdetails: unknown;
+  evaluationdetails: {
+    options?: {
+      timeStart?: number;
+      timeEnd?: number;
+    },
+    totalScore?: number;
+    objectives?: {
+      pass?: number;
+      warning?: number;
+    },
+    indicatorResults?: Array<{
+      id?: string;
+      violations?: Array<{
+        value?: any,
+        key?: string;
+        breach?: string;
+        threshold?: number;
+      }>;
+      score?: number;
+    }>,
+    result: "pass" | "fail";
+  }
 }>;
 
 export type Problem = Base<{

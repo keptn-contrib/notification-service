@@ -1,46 +1,43 @@
-import { Notification, IDefaultNotification } from './index';
+import { Notification } from './index';
 import { NewArtifact } from '../../@typings/cloud-events';
 
 export class NewArtifactNotification extends Notification {
-  constructor(private readonly newArtifact: NewArtifact) {
-    super();
+  constructor(newArtifact: NewArtifact) {
+    super(newArtifact);
+
+    this.defaultNotification = {
+      title: 'NEW ARTIFACT',
+      facts: [
+        { 
+          name: 'Project',
+          value: newArtifact.data.project
+        },
+        { 
+          name: 'Stage',
+          value: newArtifact.data.stage
+        },
+        { 
+          name: 'Service',
+          value: newArtifact.data.service
+        },
+        {
+          name: 'Image',
+          value: newArtifact.data.image + ":" + newArtifact.data.tag
+        },
+        { 
+          name: 'Deployment Strategy',
+          value: newArtifact.data.deploymentstrategy
+        }
+      ],
+    };
+
+    if (newArtifact.data.teststrategy) {
+      this.defaultNotification.facts.push({
+        name: 'Test Strategy',
+        value: newArtifact.data.teststrategy
+      })
+    }
   }
 
-  defaultNotification: IDefaultNotification = {
-    title: 'NEW ARTIFACT',
-    facts: [
-      { 
-        name: 'Project',
-        value: this.newArtifact.data.project
-      },
-      { 
-        name: 'Stage',
-        value: this.newArtifact.data.stage
-      },
-      { 
-        name: 'Service',
-        value: this.newArtifact.data.service
-      },
-      {
-        name: 'Image',
-        value: this.newArtifact.data.image
-      },
-      { 
-        name: 'Tag',
-        value: this.newArtifact.data.tag
-      },
-      { 
-        name: 'Deployment Stategy',
-        value: this.newArtifact.data.deploymentstrategy
-      },
-      { 
-        name: 'Test Strategy',
-        value: this.newArtifact.data.teststrategy
-      },
-      {
-        name: 'Keptn context',
-        value: this.newArtifact.shkeptncontext
-      }
-    ],
-  };
+
 }

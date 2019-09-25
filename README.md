@@ -1,5 +1,8 @@
 # Keptn Notification Service
 
+Read an overview and watch a video of this service in action on MS teams in this blog:
+[Keptn now talks MS Teams: How we expand Keptn’s footprint in the Microsoft world](https://medium.com/keptn/keptn-now-talks-ms-teams-how-we-expand-keptns-footprint-in-the-microsoft-world-c330c0c8d4f1)
+
 This notification service us designed be deployed into a Kepnt environment and subscribe 
 to the following Keptn Kubernetes channels as defined in [Keptn docs](https://keptn.sh/docs/0.4.0/reference/custom-service)
 * new-artifact
