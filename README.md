@@ -1,23 +1,26 @@
 # Keptn Notification Service
 
-Read an overview and watch a video of this service in action on MS teams in this blog:
+Read an overview of this service in action on MS teams in this blog:
 [Keptn now talks MS Teams: How we expand Keptn’s footprint in the Microsoft world](https://medium.com/keptn/keptn-now-talks-ms-teams-how-we-expand-keptns-footprint-in-the-microsoft-world-c330c0c8d4f1)
+
+Watch this short [YouTube video](https://youtu.be/T-qTVht4yI8) that demonstrates this setup and the Keptn notifications in action.
 
 This notification service us designed be deployed into a Kepnt environment and subscribe 
 to the following Keptn Kubernetes channels as defined in [Keptn docs](https://github.com/keptn/keptn/blob/release-0.5.0/specification/cloudevents.md)
 
 * sh.keptn.event.configuration.change
 * sh.keptn.events.deployment-finished
-* sh.keptn.events.tests-finished
+* sh.keptn.events.tests-finished  
 * sh.keptn.events.evaluation-done
 * sh.keptn.events.problem
 
 The service subscribe to each channel and evaluate the cloud event.  If there is a match, then the service will send a notification to either Slack or Microsoft Teams or both depending on how the notification service was configured.
 
-Prerequsites:
-* [Keptn 0.5.0](http://www.keptn.sh)
+_**NOTE: will not send test-finished notification if teststrategy attribute is empty**_
+
+# Prerequsites:
+* Have cluster with [Keptn 0.5.0](http://www.keptn.sh) installed
 * Slack or Microsoft teams account with permission to add apps/teams/channels
-* node v10.15.2 for development only
 * Docker for running or building new images locally 
 
 # Setup
