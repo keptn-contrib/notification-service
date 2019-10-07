@@ -150,7 +150,7 @@ export abstract class Notification implements INotification {
     // add markup formatting for all values except results
     // because the formatting in this value field has formatting
     // that will not render properly with markup tags
-    if (!key.startsWith('Indicator Results')) {
+    if ((!key.startsWith('Indicator Results')) && (!key.startsWith('Values'))) {
       value = "`" + value + "`"
     }
 

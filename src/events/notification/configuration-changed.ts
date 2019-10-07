@@ -22,14 +22,13 @@ export class ConfigurationChangedNotification extends Notification {
         }
       ],
     };
-    /*
+
     // this formatting is for teams. index.js will correct formatting to work in slack
     var valuesCanaryKey, valuesCanaryValue, valuesCanaryContent = ''
     if (configurationChanged.data.valuesCanary) {
       for(let i = 0; i < configurationChanged.data.valuesCanary.length; i++){
         valuesCanaryKey = configurationChanged.data.valuesCanary[i].Key
         valuesCanaryValue = configurationChanged.data.valuesCanary[i].Value
-        // TODO this formatting is not working in slack.  looks ok in teams
         valuesCanaryContent += `**${valuesCanaryKey}**: ${valuesCanaryValue}`
         valuesCanaryContent += "<br>"
       }  
@@ -38,6 +37,6 @@ export class ConfigurationChangedNotification extends Notification {
         value: valuesCanaryContent
       })
     }
-    */
+
   }
 }

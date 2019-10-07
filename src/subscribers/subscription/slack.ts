@@ -17,6 +17,8 @@ export class Slack implements ISubscription {
 
   public async send(notification: Notification): Promise<void> {
     try {
+      this.logger.debug('getSlackNotification body: ' + JSON.stringify(notification.getSlackNotification()));
+
       const response = await this.webhook.send(
         notification.getSlackNotification(),
       );
