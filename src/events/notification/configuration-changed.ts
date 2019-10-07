@@ -23,6 +23,25 @@ export class ConfigurationChangedNotification extends Notification {
       ],
     };
 
+    if (configurationChanged.data.valuesCanary.image) {
+      this.defaultNotification.facts.push({
+        name: 'Image',
+        value: configurationChanged.data.valuesCanary.image
+      })
+    }
+
+    if (configurationChanged.data.canary.action) {
+      var canaryAction = configurationChanged.data.canary.action
+      if (configurationChanged.data.canary.value) {
+        canaryAction += " value: " + configurationChanged.data.canary.value
+      }
+      this.defaultNotification.facts.push({
+        name: 'Action',
+        value: canaryAction
+      })
+    }
+
+    /*
     // this formatting is for teams. index.js will correct formatting to work in slack
     var valuesCanaryKey, valuesCanaryValue, valuesCanaryContent = ''
     if (configurationChanged.data.valuesCanary) {
@@ -37,6 +56,6 @@ export class ConfigurationChangedNotification extends Notification {
         value: valuesCanaryContent
       })
     }
-
+    */
   }
 }

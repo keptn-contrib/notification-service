@@ -10,18 +10,17 @@ export type ConfigurationChanged = Base<{
   project: string;
   service: string;
   stage: string;
-  valuesCanary: Array<{
-    Key?: string;
-    Value?: string;
-  }>,
-  canary: Array<{
-    Key?: string;
-    Value?: string;
-  }>,
-  channelInfo: Array<{
-    Key?: string;
-    Value?: string;
-  }>
+  valuesCanary: {
+    image: string;
+  },
+  canary: {
+    action: string;
+    value: number;
+  },
+  channelInfo: {
+    channelID: string;
+    token: string;
+  }
 }>;
 
 export type DeploymentFinished = Base<{
