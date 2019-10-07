@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: notification-service
-        image: robjahn/notification-service:0.1.1
+        image: keptnexamples/notification-service:0.2.0
         imagePullPolicy: Always
         env:
         - name: TEAMS_URL

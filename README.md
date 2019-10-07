@@ -4,18 +4,18 @@ Read an overview and watch a video of this service in action on MS teams in this
 [Keptn now talks MS Teams: How we expand Keptn’s footprint in the Microsoft world](https://medium.com/keptn/keptn-now-talks-ms-teams-how-we-expand-keptns-footprint-in-the-microsoft-world-c330c0c8d4f1)
 
 This notification service us designed be deployed into a Kepnt environment and subscribe 
-to the following Keptn Kubernetes channels as defined in [Keptn docs](https://keptn.sh/docs/0.4.0/reference/custom-service)
-* new-artifact
-* configuration-changed
-* deployment-finished
-* tests-finished
-* evaluation-done
-* problem
+to the following Keptn Kubernetes channels as defined in [Keptn docs](https://github.com/keptn/keptn/blob/release-0.5.0/specification/cloudevents.md)
+
+* sh.keptn.event.configuration.change
+* sh.keptn.events.deployment-finished
+* sh.keptn.events.tests-finished
+* sh.keptn.events.evaluation-done
+* sh.keptn.events.problem
 
 The service subscribe to each channel and evaluate the cloud event.  If there is a match, then the service will send a notification to either Slack or Microsoft Teams or both depending on how the notification service was configured.
 
 Prerequsites:
-* [Keptn 0.4.0](http://www.keptn.sh)
+* [Keptn 0.5.0](http://www.keptn.sh)
 * Slack or Microsoft teams account with permission to add apps/teams/channels
 * node v10.15.2 for development only
 * Docker for running or building new images locally 
@@ -52,8 +52,8 @@ environment variables with the webhook URL.  Leave the value empty if the servic
 
 # Send notifications
 
-Use the keptn CLI to start a pipeline using the command [keptn send event new-artifact](https://keptn.sh/docs/0.4.0/reference/cli/#keptn-send-event-new-artifact).   As the pipeline runs,
-it will send various cloud events like "new-artifact" and "deployment-finished"
+Use the keptn CLI to start a pipeline using the command [keptn send event new-artifact](https://keptn.sh/docs/0.5.0/reference/cli/#keptn-send-event-new-artifact).   As the pipeline runs,
+it will send various cloud events like "configuration change" and "deployment finished"
 
 # Local development
 
@@ -73,23 +73,22 @@ To manually setup a request in a tool like Postman, use the following values.
 * Type = POST
 * Raw Body for a Keptn deployment event
     ```
-    {  
-    "specversion":"0.2",
-    "type":"sh.keptn.events.new-artifact",
-    "id":"1234",
-    "time":"2018-04-05T17:31:00Z",
-    "contenttype":"application/json",
-    "shkeptncontext":"db51be80-4fee-41af-bb53-1b093d2b694c",
-    "data":{  
-        "githuborg":"keptn-tiger",
-        "project":"sockshop",
-        "teststrategy":"functional",
-        "deploymentstrategy":"direct",
-        "stage":"dev",
-        "service":"carts",
-        "image":"10.11.245.27:5000/sockshopcr/carts",
-        "tag":"0.6.7-16"
-    }
+    {
+        "type": "sh.keptn.event.configuration.change",
+        "specversion": "0.2",
+        "source": "https://github.com/keptn/keptn/cli",
+        "id": "49ac0dec-a83b-4bc1-9dc0-1f050c7e781b",
+        "time": "2019-06-07T07:02:15.64489Z",
+        "contenttype": "application/json",
+        "shkeptncontext":"49ac0dec-a83b-4bc1-9dc0-1f050c7e789b",
+        "data": {
+            "project": "sockshop",
+            "stage": "staging",
+            "service": "carts",
+            "valuesCanary": {
+            "image": "docker.io/keptnexamples/carts:0.9.1"
+            }
+        }
     }
     ```
 You should get a HTTP 200 response code and see the notification in either Slack or Microsoft Teams.
@@ -99,10 +98,14 @@ You should get a HTTP 200 response code and see the notification in either Slack
 1. Run these commands after adjusting the repo, image name, and tag in this example
     ```
     # build image
-    docker build -t robjahn/notification-service:0.1.0 .
+    docker build -t keptnexamples/notification-service:0.2.0 .
 
     # start image. Leave out environment variable for unwanted service
-    docker run -p 8080:8080 -e TEAMS_URL="<Your URL>" -e SLACK_URL="your URL" robjahn/notification-service:0.1.0
+    docker run -p 8080:8080 -e TEAMS_URL="<Your URL>" -e SLACK_URL="your URL" keptnexamples/notification-service:0.2.0
+
+    # push image
+    docker login
+    docker push keptnexamples/notification-service:0.2.0
     ```
 1. Access the service at ```http://localhost:8080```
 

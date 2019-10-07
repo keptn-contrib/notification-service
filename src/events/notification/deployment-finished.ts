@@ -20,10 +20,6 @@ export class DeploymentFinishedNotification extends Notification {
           name: 'Service',
           value: deploymentFinished.data.service
         },
-        {
-          name: 'Image',
-          value: deploymentFinished.data.image + ":" + deploymentFinished.data.tag
-        },
         { 
           name: 'Deployment Strategy',
           value: deploymentFinished.data.deploymentstrategy

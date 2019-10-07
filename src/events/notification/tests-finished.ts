@@ -20,18 +20,18 @@ export class TestsFinishedNotification extends Notification {
           name: 'Service',
           value: testsFinished.data.service
         },
-        {
-          name: 'Image',
-          value: testsFinished.data.image + ":" + testsFinished.data.tag
+        { 
+          name: 'Test Strategy',
+          value: testsFinished.data.teststrategy
         },
         { 
           name: 'Deployment Strategy',
           value: testsFinished.data.deploymentstrategy
         },
         { 
-          name: 'Test Strategy',
-          value: testsFinished.data.teststrategy
-        },
+          name: 'Started at',
+          value: testsFinished.data.startedat
+        }
       ],
     };
   }

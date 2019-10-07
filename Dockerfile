@@ -31,5 +31,7 @@ COPY --from=builder /app/dist dist
 # Run everything after as non-privileged user.
 USER keptn
 
+ADD MANIFEST /
+
 ENTRYPOINT ["dumb-init", "--"]
-CMD ["node", "dist/main.js"]
+CMD ["sh", "-c", "cat /MANIFEST && node dist/main.js"]

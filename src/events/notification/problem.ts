@@ -13,20 +13,24 @@ export class ProblemNotification extends Notification {
           value: problem.data.ProblemTitle
         },
         { 
+          name: 'State',
+          value: problem.data.State
+        },        
+        { 
           name: 'Source',
           value: problem.source
-        },
-        { 
-          name: 'PID',
-          value: problem.data.PID
         },
         {
           name: 'Problem ID',
           value: problem.data.ProblemID
         },
         { 
-          name: 'State',
-          value: problem.data.State
+          name: 'ImpactedEntity',
+          value: problem.data.ImpactedEntity
+        },
+        {
+          name: 'Problem Details',
+          value: problem.data.ProblemDetails.ProblemDetailsJSON
         }
       ],
     };

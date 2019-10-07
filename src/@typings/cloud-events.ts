@@ -1,66 +1,55 @@
 export const enum CloudEventType {
-  NewArtifact = 'sh.keptn.events.new-artifact',
-  ConfigurationChanged = 'sh.keptn.events.configuration-changed',
+  ConfigurationChanged = 'sh.keptn.event.configuration.change',
   DeploymentFinished = 'sh.keptn.events.deployment-finished',
   TestsFinished = 'sh.keptn.events.tests-finished',
   EvaluationDone = 'sh.keptn.events.evaluation-done',
   Problem = 'sh.keptn.events.problem',
 }
 
-export type NewArtifact = Base<{
-  githuborg: string;
-  project: string;
-  teststrategy: string;
-  deploymentstrategy: string;
-  stage: string;
-  service: string;
-  image: string;
-  tag: string;
-
-}>;
-
 export type ConfigurationChanged = Base<{
-  service: string;
-  image: string;
-  tag: string;
   project: string;
+  service: string;
   stage: string;
-  githuborg: string;
-  teststrategy: string;
-  deploymentstrategy: string;
+  valuesCanary: Array<{
+    Key?: string;
+    Value?: string;
+  }>,
+  canary: Array<{
+    Key?: string;
+    Value?: string;
+  }>,
+  channelInfo: Array<{
+    Key?: string;
+    Value?: string;
+  }>
 }>;
 
 export type DeploymentFinished = Base<{
-  githuborg: string;
   project: string;
-  teststrategy: string;
-  deploymentstrategy: string;
   stage: string;
   service: string;
-  image: string;
-  tag: string;
+  teststrategy: string;
+  deploymentstrategy: string;
 }>;
 
 export type TestsFinished = Base<{
-  githuborg: string;
   project: string;
-  teststrategy: string;
-  deploymentstrategy: string;
   stage: string;
   service: string;
-  image: string;
-  tag: string;
+  teststrategy: string;
+  deploymentstrategy: string;
+  startedat: string;
 }>;
 
 export type EvaluationDone = Base<{
   githuborg: string;
   project: string;
-  teststrategy: string;
-  deploymentstrategy: string;
-  stage: string;
   service: string;
   image: string;
   tag: string;
+  stage: string;
+  teststrategy: string;
+  deploymentstrategy: string;
   evaluationpassed: boolean;
   // Evaluation Details isn't strictly typed
   evaluationdetails: {
@@ -90,21 +79,22 @@ export type EvaluationDone = Base<{
 export type Problem = Base<{
   State: string;
   ProblemID: string;
-  PID: string;
   ProblemTitle: string;
-  // { ProblemDetailsJSON }
-  ProblemDetails: unknown;
-  // { ImpactedEntities }
+  ProblemDetails: {
+    ProblemDetailsJSON: string;
+  };
   ImpactedEntities: unknown;
   ImpactedEntity: string;
+  PID: string;
 }>;
 
 export interface CloudEvent {
-  specversion: string;
   type: CloudEventType;
+  specversion: string;
   source: string;
+  id: string;
   time: string;
-  datacontenttype: string;
+  contenttype: string;
   shkeptncontext: string;
   data: unknown;
 }

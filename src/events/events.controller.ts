@@ -7,12 +7,11 @@ import {
   HttpStatus,
   Inject,
 } from '@nestjs/common';
-import { CloudEvent, CloudEventType, NewArtifact, ConfigurationChanged, DeploymentFinished, TestsFinished, EvaluationDone, Problem } from '../@typings/cloud-events';
+import { CloudEvent, CloudEventType, ConfigurationChanged, DeploymentFinished, TestsFinished, EvaluationDone, Problem } from '../@typings/cloud-events';
 import { INotification } from './notification';
 import { Notification } from './notification';
 import { Logger } from 'winston';
 import { SubscriberService } from '../subscribers/subscriber.service';
-import { NewArtifactNotification } from './notification/new-artifact';
 import { ConfigurationChangedNotification } from './notification/configuration-changed';
 import { DeploymentFinishedNotification } from './notification/deployment-finished';
 import { TestsFinishedNotification } from './notification/tests-finished';
@@ -28,6 +27,7 @@ export class EventsController {
   getEvent(@Body() cloudEvent: CloudEvent) {
 
     this.logger.debug('EventsController.getEvent() post received');
+    this.logger.debug('cloudEvent:' + JSON.stringify(cloudEvent));
     const message = this.createCloudEventServiceFactory(cloudEvent);
     const subscribers = this.subscriberService.getSubscribers();
 
@@ -37,12 +37,7 @@ export class EventsController {
   private createCloudEventServiceFactory(
     cloudEvent: CloudEvent,
   ): INotification {
-    if (
-      Notification.isEvent<NewArtifact>(CloudEventType.NewArtifact, cloudEvent)
-    ) {
-      return new NewArtifactNotification(cloudEvent);
-    }
-    else if  (
+    if  (
       Notification.isEvent<ConfigurationChanged>(CloudEventType.ConfigurationChanged, cloudEvent)
     ) {
       return new ConfigurationChangedNotification(cloudEvent);

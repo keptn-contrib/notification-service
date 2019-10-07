@@ -1,39 +1,3 @@
-## new-artifact
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: notification-service-new-artifact-distributor
-  namespace: keptn
-spec:
-  selector:
-    matchLabels:
-      run: distributor
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        run: distributor
-    spec:
-      containers:
-      - name: distributor
-        image: keptn/distributor:0.1.0
-        ports:
-        - containerPort: 8080
-        resources:
-          requests:
-            memory: "32Mi"
-            cpu: "50m"
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        env:
-        - name: PUBSUB_URL
-          value: 'nats://keptn-nats-cluster'
-        - name: PUBSUB_TOPIC
-          value: 'sh.keptn.events.new-artifact'
-        - name: PUBSUB_RECIPIENT
-          value: 'notification-service'
----
 ## tests-finished
 apiVersion: apps/v1
 kind: Deployment
@@ -106,11 +70,11 @@ spec:
         - name: PUBSUB_RECIPIENT
           value: 'notification-service'
 ---
-## configuration-changed
+## configuration.changed
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: notification-service-configuration-changed-distributor
+  name: notification-service-configuration-change-distributor
   namespace: keptn
 spec:
   selector:
@@ -138,7 +102,7 @@ spec:
         - name: PUBSUB_URL
           value: 'nats://keptn-nats-cluster'
         - name: PUBSUB_TOPIC
-          value: 'sh.keptn.events.configuration-changed'
+          value: 'sh.keptn.event.configuration.change'
         - name: PUBSUB_RECIPIENT
           value: 'notification-service'
 ---

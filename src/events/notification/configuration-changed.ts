@@ -2,7 +2,7 @@ import { Notification } from './index';
 import { ConfigurationChanged } from '../../@typings/cloud-events';
 
 export class ConfigurationChangedNotification extends Notification {
-  constructor(configurationChanged: ConfigurationChanged) {
+  constructor(configurationChanged: ConfigurationChanged ) {
     super(configurationChanged);
   
     this.defaultNotification = {
@@ -19,24 +19,25 @@ export class ConfigurationChangedNotification extends Notification {
         { 
           name: 'Service',
           value: configurationChanged.data.service
-        },
-        {
-          name: 'Image',
-          value: configurationChanged.data.image + ":" + configurationChanged.data.tag
-        },
-        { 
-          name: 'Deployment Strategy',
-          value: configurationChanged.data.deploymentstrategy
         }
       ],
     };
-
-    if (configurationChanged.data.teststrategy) {
+    /*
+    // this formatting is for teams. index.js will correct formatting to work in slack
+    var valuesCanaryKey, valuesCanaryValue, valuesCanaryContent = ''
+    if (configurationChanged.data.valuesCanary) {
+      for(let i = 0; i < configurationChanged.data.valuesCanary.length; i++){
+        valuesCanaryKey = configurationChanged.data.valuesCanary[i].Key
+        valuesCanaryValue = configurationChanged.data.valuesCanary[i].Value
+        // TODO this formatting is not working in slack.  looks ok in teams
+        valuesCanaryContent += `**${valuesCanaryKey}**: ${valuesCanaryValue}`
+        valuesCanaryContent += "<br>"
+      }  
       this.defaultNotification.facts.push({
-        name: 'Test Strategy',
-        value: configurationChanged.data.teststrategy
+        name: 'Values',
+        value: valuesCanaryContent
       })
     }
-
+    */
   }
 }
