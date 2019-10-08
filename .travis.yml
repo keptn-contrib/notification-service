@@ -10,7 +10,6 @@ before_install:
 - REPO_URL="$(git remote get-url --all origin)"
 - ./writeManifest.sh
 - cat MANIFEST
-- cp MANIFEST docker-image/
 jobs:
   include:
   - stage: feature/bug

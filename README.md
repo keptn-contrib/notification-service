@@ -112,6 +112,13 @@ You should get a HTTP 200 response code and see the notification in either Slack
     ```
 1. Access the service at ```http://localhost:8080```
 
+# Travis-CI setup
+
+Travis is configured with CI to run the pipeline on commits.
+
+The travis pipeline is be configured with the REGISTRY_USER and REGISTRY_PASSWORD variables.  
+Goto pipeline ```more options``` for adding these as ```environment variables```.
+
 # Reference
 
 ## Mircosoft cards
