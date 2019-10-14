@@ -101,14 +101,14 @@ You should get a HTTP 200 response code and see the notification in either Slack
 1. Run these commands after adjusting the repo, image name, and tag in this example
     ```
     # build image
-    docker build -t keptnexamples/notification-service:0.2.0 .
+    docker build -t keptncontrib/notification-service:0.2.0 .
 
     # start image. Leave out environment variable for unwanted service
-    docker run -p 8080:8080 -e TEAMS_URL="<Your URL>" -e SLACK_URL="your URL" keptnexamples/notification-service:0.2.0
+    docker run -p 8080:8080 -e TEAMS_URL="<Your URL>" -e SLACK_URL="your URL" keptncontrib/notification-service:0.2.0
 
     # push image
     docker login
-    docker push keptnexamples/notification-service:0.2.0
+    docker push keptncontrib/notification-service:0.2.0
     ```
 1. Access the service at ```http://localhost:8080```
 
