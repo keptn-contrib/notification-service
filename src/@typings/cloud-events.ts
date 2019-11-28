@@ -49,29 +49,33 @@ export type EvaluationDone = Base<{
   stage: string;
   teststrategy: string;
   deploymentstrategy: string;
-  evaluationpassed: boolean;
   // Evaluation Details isn't strictly typed
   evaluationdetails: {
     options?: {
       timeStart?: number;
       timeEnd?: number;
     },
-    totalScore?: number;
+    score?: number;
     objectives?: {
       pass?: number;
       warning?: number;
     },
     indicatorResults?: Array<{
       id?: string;
-      violations?: Array<{
-        value?: any,
-        key?: string;
-        breach?: string;
-        threshold?: number;
-      }>;
+      value?: {
+        metric?: string;
+        value?: number;
+        success?: boolean;
+        message?: string;
+      }
+      targets?: Array<{
+        criteria?: string;
+        targetValue?: string;
+        violated?: boolean;
+      }>
       score?: number;
     }>,
-    result: "pass" | "fail";
+    result: 'pass' | 'fail' | 'warning';
   }
 }>;
 
