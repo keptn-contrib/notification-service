@@ -21,10 +21,11 @@ export class EvaluationDoneNotification extends Notification {
           name: 'Service',
           value: evaluationDone.data.service,
         },
+        /* in keptn0.6 the image reference is no longer available in evaluation_done
         {
           name: 'Image',
           value: evaluationDone.data.image + ':' + evaluationDone.data.tag,
-        },
+        },*/
         {
           name: 'Deployment Strategy',
           value: evaluationDone.data.deploymentstrategy,
@@ -84,7 +85,7 @@ export class EvaluationDoneNotification extends Notification {
         score = evaluationDone.data.evaluationdetails.indicatorResults[i].score;
         targets = JSON.stringify(evaluationDone.data.evaluationdetails.indicatorResults[i].targets);
         facts_value += `**${id}**:  **score:** ${score}`;
-        if (targets !== '[]') {
+        if (targets !== '[]' && targets !== 'null') {
           facts_value += `, **targets:**<br>${targets}`;
         }
         facts_value += '<br>';
