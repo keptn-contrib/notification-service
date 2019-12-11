@@ -17,7 +17,7 @@ import { resolve } from 'path';
         }),
       ],
     }),
-    ConfigModule.load(resolve(__dirname, 'config', '**', '!(*.d).{ts,js}' )),
+    ConfigModule.load(resolve(__dirname, 'config', '**', '!(*.d).{ts,js}')),
   ],
   controllers: [EventsController],
   providers: [SubscriberService],

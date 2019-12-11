@@ -1,7 +1,8 @@
 import { ISubscription } from '../../subscribers/subscriber.type';
 import { IncomingWebhookSendArguments } from '@slack/webhook';
 import { IMessageCard } from '../../@typings/message-card';
-import { CloudEvent } from "../../@typings/cloud-events";
+import { CloudEvent } from '../../@typings/cloud-events';
+import { IWebexTeams } from '../../@typings/webexTeams';
 
 export interface INotification {
   notify(subscriptions: ISubscription[]): Promise<void>;
@@ -12,6 +13,7 @@ export interface IDefaultNotification {
   facts: Array<{ name: string; value: string }>;
   image?: string;
   teamsThemeColor?: string;
+  webexTeamsColor?: string;
   slackEmoji?: string;
 }
 
@@ -21,6 +23,7 @@ export abstract class Notification implements INotification {
   public constructor(event: CloudEvent) {
     this.context = event.shkeptncontext;
   }
+
   /**
    * A type guard that can be used to add typing to a CloudEvent. It's working
    * under the assumption that if the event name passes, the rest of the event
@@ -38,6 +41,7 @@ export abstract class Notification implements INotification {
   protected defaultNotification: IDefaultNotification;
   protected slackNotification?: IncomingWebhookSendArguments;
   protected teamsNotification?: IMessageCard;
+  protected webexTeamsNotification?: IWebexTeams;
 
   /**
    * Sends notifications all the subscribers.
@@ -46,6 +50,39 @@ export abstract class Notification implements INotification {
    */
   public async notify(subscriptions: ISubscription[]): Promise<void> {
     subscriptions.forEach(s => s.send(this));
+  }
+
+  /**
+   * Generates a Webex Teams webhook payload
+   */
+  public getWebexTeamsNotification(): IWebexTeams {
+    if (!this.webexTeamsNotification) {
+      if (!this.defaultNotification) {
+        // TODO
+        throw new Error('MISSING');
+      }
+      // Create body of the message
+      const body: any =
+        ` ### ${this.defaultNotification.title}\n\n ` +
+        this.defaultNotification.facts
+          .map(
+            f =>
+              `**${f.name}**: ${this.formatForWebExTeams(
+                f.name,
+                this.sanitizeValue(f.value),
+              )}\n\n`,
+          )
+          .join(' ') +
+        ` keptn-context: ${this.context}`;
+
+      // Wrap the body with a markdown blockquote for color stripes
+      const message: any = {
+        markdown: `<blockquote class=${this.defaultNotification
+          .webexTeamsColor || 'info'}> \n ${body}`,
+      };
+      return message;
+    }
+    return this.webexTeamsNotification;
   }
 
   /**
@@ -74,25 +111,28 @@ export abstract class Notification implements INotification {
             type: 'section',
             fields: this.defaultNotification.facts.map(f => ({
               type: 'mrkdwn',
-              text: `*${f.name}*: ${this.formatForSlack(f.name, this.sanitizeValue(f.value)) }`,
+              text: `*${f.name}*: ${this.formatForSlack(
+                f.name,
+                this.sanitizeValue(f.value),
+              )}`,
             })),
             accessory: this.defaultNotification.image
               ? {
-                type: 'image',
-                image_url: this.defaultNotification.image,
-                alt_text: 'Keptn',
-              }
+                  type: 'image',
+                  image_url: this.defaultNotification.image,
+                  alt_text: 'Keptn',
+                }
               : undefined,
           },
           {
             type: 'context',
             elements: [
               {
-                "type": "mrkdwn",
-                "text": `Keptn Context: ${this.context}`
-              }
-            ]
-          }
+                type: 'mrkdwn',
+                text: `Keptn Context: ${this.context}`,
+              },
+            ],
+          },
         ],
       };
       return message;
@@ -125,7 +165,7 @@ export abstract class Notification implements INotification {
           },
           {
             activitySubtitle: `Keptn Context: ${this.context}`,
-          }
+          },
         ],
         potentialAction: [],
       };
@@ -161,8 +201,29 @@ export abstract class Notification implements INotification {
 
     // slack has 2000 character message limit and wont show if longer
     if (value.length > 2000) {
-      value = value.substring(1,1990) + "...(more)..."
+      value = value.substring(1, 1990) + '...(more)...';
     }
+    return value;
+  }
+  private formatForWebExTeams(key: string, value: string): string {
+    // replace teams formatting for line breaks
+    var emojis = '';
+    value = value.replace(/<BR>/g, '\n\n');
+
+    // add markup formatting for all values except results
+    // because the formatting in this value field has formatting
+    // that will not render properly with markup tags
+    if (!key.startsWith('Indicator Results')) {
+      // Extract emojis here and write value without emojis
+      const regex = /(.*?)(&#.*?;)/;
+      if (regex.test(value)) {
+        emojis = regex.exec(value)[2];
+        value = regex.exec(value)[1];
+      }
+
+      value = '`' + value + '`' + emojis;
+    }
+
     return value;
   }
 }

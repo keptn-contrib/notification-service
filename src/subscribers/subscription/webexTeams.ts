@@ -1,10 +1,10 @@
 import * as rp from 'request-promise-native';
 import { ISubscription } from '../subscriber.type';
-import { Notification } from '../../events/notification';
 import { Logger } from 'winston';
+import { Notification } from '../../events/notification';
 import { Inject } from '@nestjs/common';
 
-export class Teams implements ISubscription {
+export class WebexTeams implements ISubscription {
   constructor(
     @Inject('winston') private readonly logger: Logger,
     private readonly url: string,
@@ -12,16 +12,18 @@ export class Teams implements ISubscription {
 
   public async send(notification: Notification): Promise<void> {
     try {
-      const body = notification.getTeamsNotification();
-      this.logger.debug('getTeamsNotification body: ' + JSON.stringify(body));
-
+      const body = notification.getWebexTeamsNotification();
       const response = await rp(this.url, {
         method: 'POST',
         json: true,
+        resolveWithFullResponse: true,
         body,
       });
       this.logger.debug(
-        'getTeamsNotification ' + body.summary + ' response: ' + response,
+        'getWebexTeamsNotification ' +
+          body +
+          ' response: ' +
+          response.statusCode,
       );
     } catch (err) {
       this.logger.error(err);

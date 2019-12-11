@@ -20,7 +20,8 @@ export type ConfigurationChanged = Base<{
   channelInfo: {
     channelID: string;
     token: string;
-  }
+  },
+  labels: {}
 }>;
 
 export type DeploymentFinished = Base<{
@@ -37,7 +38,7 @@ export type TestsFinished = Base<{
   service: string;
   teststrategy: string;
   deploymentstrategy: string;
-  startedat: string;
+  start: string;
 }>;
 
 export type EvaluationDone = Base<{
@@ -77,6 +78,7 @@ export type EvaluationDone = Base<{
     }>,
     result: 'pass' | 'fail' | 'warning';
   }
+  result: 'pass' | 'fail' | 'warning';
 }>;
 
 export type Problem = Base<{

@@ -5,12 +5,12 @@ export class ProblemNotification extends Notification {
   constructor(problem: Problem) {
     super(problem);
 
-    this.  defaultNotification = {
+    this.defaultNotification = {
       title: 'PROBLEM',
       facts: [
-        { 
+        {
           name: 'Problem Title',
-          value: problem.data.ProblemTitle
+          value: problem.data.ProblemTitle,
         },
         { 
           name: 'State',
@@ -18,11 +18,11 @@ export class ProblemNotification extends Notification {
         },        
         { 
           name: 'Source',
-          value: problem.source
+          value: problem.source,
         },
         {
           name: 'Problem ID',
-          value: problem.data.ProblemID
+          value: problem.data.ProblemID,
         },
         { 
           name: 'ImpactedEntity',
@@ -34,5 +34,15 @@ export class ProblemNotification extends Notification {
         }
       ],
     };
+    // Set WebexTeams color depending on the state of the problem
+    if (
+      /closed/gi.test(
+        this.defaultNotification.facts.find(x => x.name === 'State').value,
+      )
+    ) {
+      this.defaultNotification.webexTeamsColor = 'success'; // green
+    } else {
+      this.defaultNotification.webexTeamsColor = 'danger'; // red
+    }
   }
 }

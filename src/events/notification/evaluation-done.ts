@@ -42,16 +42,31 @@ export class EvaluationDoneNotification extends Notification {
 
     // add an emoji and color based on evaluationpassed value
     let evaluationpassed_value = '';
-    if (evaluationDone.data.evaluationdetails.result === 'pass' || evaluationDone.data.evaluationdetails.result === 'warning') {
+    if (evaluationDone.data.result === 'pass') {
       this.defaultNotification.teamsThemeColor = '31cc62';  // green
+      this.defaultNotification.webexTeamsColor = 'success'; // green
       evaluationpassed_value += 'true  &#x1F44D;';  // unicode for thumbsup
-    } else {
+    }
+    else if (evaluationDone.data.result === 'warning') {
+      this.defaultNotification.teamsThemeColor = 'ffff00';  // yellow
+      this.defaultNotification.webexTeamsColor = 'warning'; // yellow
+      // TODO find emoji for warning
+      evaluationpassed_value += 'warning  &#x1F44D;';  // unicode for thumbsup
+    }
+    else {
       this.defaultNotification.teamsThemeColor = 'ed1909';  // red
+      this.defaultNotification.webexTeamsColor = 'danger'; // red
+
       evaluationpassed_value += 'false  &#x26D4;'; // unicode for no_entry
     }
     this.defaultNotification.facts.push({
       name: 'Evaluation passed',
       value: evaluationpassed_value,
+    });
+
+    this.defaultNotification.facts.push({
+      name: 'Evaluation message',
+      value: evaluationDone.data.evaluationdetails.result,
     });
 
     let totalScoreValue = '';
@@ -78,23 +93,32 @@ export class EvaluationDoneNotification extends Notification {
     }
 
     // this formatting is for teams. index.js will correct formatting to work in slack
-    let facts_value = '', id, score, targets;
+    let facts_value = '', id, score, targets, result;
     if (evaluationDone.data.evaluationdetails.indicatorResults) {
       for (let i = 0; i < evaluationDone.data.evaluationdetails.indicatorResults.length; i++) {
-        id = evaluationDone.data.evaluationdetails.indicatorResults[i].value.metric;
-        score = evaluationDone.data.evaluationdetails.indicatorResults[i].score;
-        targets = JSON.stringify(evaluationDone.data.evaluationdetails.indicatorResults[i].targets);
-        facts_value += `**${id}**:  **score:** ${score}`;
-        if (targets !== '[]' && targets !== 'null') {
-          facts_value += `, **targets:**<br>${targets}`;
+        if (evaluationDone.data.evaluationdetails.indicatorResults[i].value) {
+          id = evaluationDone.data.evaluationdetails.indicatorResults[i].value.metric;
+          if (evaluationDone.data.evaluationdetails.indicatorResults[i].value.message) {
+            result = evaluationDone.data.evaluationdetails.indicatorResults[i].value.message;
+            facts_value += `**${id}**: ${result}`;
+          } else {
+            result = evaluationDone.data.evaluationdetails.indicatorResults[i].value.value;
+            score = evaluationDone.data.evaluationdetails.indicatorResults[i].score;
+            targets = JSON.stringify(evaluationDone.data.evaluationdetails.indicatorResults[i].targets);
+            facts_value += `**${id}**: ${result}, **score:** ${score}`;
+            if (targets !== '[]' && targets !== 'null') {
+              facts_value += `, **targets:**<br>${targets}`;
+            }
+          }
+          facts_value += '<br>';
+        } else {
+          facts_value += ``
         }
-        facts_value += '<br>';
       }
       this.defaultNotification.facts.push({
         name: 'Indicator Results',
         value: facts_value,
       });
     }
-
   }
 }
