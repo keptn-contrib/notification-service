@@ -29,7 +29,7 @@ export class TestsFinishedNotification extends Notification {
           },
           { 
             name: 'Started at',
-            value: testsFinished.data.startedat
+            value: testsFinished.data.start
           }
         ],
       };

@@ -1,5 +1,6 @@
 import { Notification } from './index';
 import { ConfigurationChanged } from '../../@typings/cloud-events';
+import { stringify } from 'querystring';
 
 export class ConfigurationChangedNotification extends Notification {
   constructor(configurationChanged: ConfigurationChanged ) {
@@ -23,7 +24,14 @@ export class ConfigurationChangedNotification extends Notification {
       ],
     };
 
-    if (configurationChanged.data.valuesCanary.image) {
+    if (configurationChanged.data.labels) {
+        this.defaultNotification.facts.push({
+          name: "Labels",
+          value: JSON.stringify(configurationChanged.data.labels)
+        })      
+    }
+
+    if (configurationChanged.data.valuesCanary && configurationChanged.data.valuesCanary.image) {
       this.defaultNotification.facts.push({
         name: 'Image',
         value: configurationChanged.data.valuesCanary.image
@@ -40,22 +48,5 @@ export class ConfigurationChangedNotification extends Notification {
         value: canaryAction
       })
     }
-
-    /*
-    // this formatting is for teams. index.js will correct formatting to work in slack
-    var valuesCanaryKey, valuesCanaryValue, valuesCanaryContent = ''
-    if (configurationChanged.data.valuesCanary) {
-      for(let i = 0; i < configurationChanged.data.valuesCanary.length; i++){
-        valuesCanaryKey = configurationChanged.data.valuesCanary[i].Key
-        valuesCanaryValue = configurationChanged.data.valuesCanary[i].Value
-        valuesCanaryContent += `**${valuesCanaryKey}**: ${valuesCanaryValue}`
-        valuesCanaryContent += "<br>"
-      }  
-      this.defaultNotification.facts.push({
-        name: 'Values',
-        value: valuesCanaryContent
-      })
-    }
-    */
   }
 }

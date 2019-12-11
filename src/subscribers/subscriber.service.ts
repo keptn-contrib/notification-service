@@ -4,6 +4,7 @@ import { Logger } from 'winston';
 
 import { Slack } from './subscription/slack';
 import { Teams } from './subscription/teams';
+import { WebexTeams } from './subscription/webexTeams';
 import { InjectConfig, ConfigService } from 'nestjs-config';
 
 @Injectable()
@@ -28,7 +29,15 @@ export class SubscriberService {
       this.subscribers.push(new Teams(logger, teamsUrl));
     }
 
-    this.logger.debug(`SubscriberService constructor. Finished loading ${this.subscribers.length} subscribers`);
+    const webexTeamsUrl = this.config.get('url.webexTeams');
+    this.logger.info(`The WebexTeams URL is ${webexTeamsUrl}`);
+    if (webexTeamsUrl) {
+      this.subscribers.push(new WebexTeams(logger, webexTeamsUrl));
+    }
+
+    this.logger.debug(
+      `SubscriberService constructor. Finished loading ${this.subscribers.length} subscribers`,
+    );
   }
 
   getSubscribers(): ISubscription[] {
