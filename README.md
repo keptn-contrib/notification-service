@@ -26,6 +26,17 @@ The service will send a notification to the configured
 
 _**NOTE: will not send test-finished notification if teststrategy attribute is empty**_
 
+## Compatibility Matrix
+
+Please always double check the version of Keptn you are using compared to the version of this service, and follow the compatibility matrix below.
+
+
+| Keptn Version    | [Notification Service Image](https://hub.docker.com/r/keptncontrib/notification-service/tags) |
+|:----------------:|:----------------------------------------:|
+|       0.5.x      | keptncontrib/notification-service:0.2.0  |
+|       0.6.x      | keptncontrib/notification-service:0.3.0  |
+|      develop     | keptncontrib/notification-service:latest |
+
 
 # Setup
 ## 1. Setup your Notification Provider
@@ -53,8 +64,15 @@ A keptn service that forwards events on keptn channels to a Slack channel using 
 
 ### Keptn notification service
 
-1. Make a copy of the [notification-service.yaml](notification-service.yaml) and [notification-distributors.yaml](notification-distributors.yaml) file and adjust these 
-environment variables with the webhook URL. Leave the value empty if the service is not being used.
+1. Make a copy of the [notification-service.yaml](notification-service.yaml) and [notification-distributors.yaml](notification-distributors.yaml) file.
+1. Ensure you are installing the correct version of the notification service and adapt 
+   the `image` in **notification-service.yaml** if necessary:
+    ```yaml
+    containers:
+    - name: notification-service
+        image: keptncontrib/notification-service:0.2.0
+    ```
+1. Furthermore, adjust these environment variables with the webhook URL. Leave the value empty if the referenced service is not being used.
 ```
 - name: TEAMS_URL
   value: ""
