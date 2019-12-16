@@ -24,7 +24,7 @@ to the following [Keptn Cloud Events](https://github.com/keptn/spec/blob/master/
 
 The service will send a notification to the configured 
 
-_**NOTE: will not send test-finished notification if teststrategy attribute is empty**_
+_**NOTE: The service will not send test-finished notification if teststrategy is empty**_
 
 ## Compatibility Matrix
 
@@ -58,32 +58,32 @@ A keptn service that forwards events on keptn channels to a Slack channel using 
 ## 2. Installation of Notification Service in Keptn
 
 ### Prerequesits
-* Have cluster with [Keptn 0.6.0](https://keptn.sh/docs/0.6.0/installation/setup-keptn/) installed
+* Have a cluster with [Keptn 0.6.0](https://keptn.sh/docs/0.6.0/installation/setup-keptn/) installed
 * Slack or Microsoft teams account with permission to add apps/teams/channels
 * For development: Docker for running or building new images locally 
 
 ### Keptn notification service
 
-1. Make a copy of the [deploy/notification-service.yaml](deploy/notification-service.yaml) and [deploy/notification-distributors.yaml](deploy/notification-distributors.yaml) file.
+1. Make a copy of the [deploy/notification-service.yaml](deploy/notification-service.yaml) and [deploy/notification-distributors.yaml](deploy/notification-distributors.yaml) files (Note: do not use right-click and download).
 1. Ensure you are installing the correct version of the notification service and adapt 
    the `image` in **notification-service.yaml** if necessary:
     ```yaml
     containers:
     - name: notification-service
-        image: keptncontrib/notification-service:0.2.0
+        image: keptncontrib/notification-service:0.3.0.beta
     ```
-1. Furthermore, adjust these environment variables with the webhook URL. Leave the value empty if the referenced service is not being used.
-```
-- name: TEAMS_URL
-  value: ""
-- name: BRIDGE_URL
-  value: ""
-- name: WEBEXTEAMS_URL
-  value: ""
-```
+1. Furthermore, adjust these environment variables with the webhook URL of the service you want to send notifications to. Leave the value empty if the referenced service is not being used.
+    ```yaml
+    - name: TEAMS_URL
+    value: ""
+    - name: BRIDGE_URL
+    value: ""
+    - name: WEBEXTEAMS_URL
+    value: ""
+    ```
 1. Deploy services into cluster
-  * ```kubectl apply -f deploy/notification-service.yaml``` using the new service Helm Chart file
-  * ```kubectl apply -f deploy/notification-distributors.yaml``` using the file in this repo
+  * ```kubectl apply -f notification-service.yaml``` using the new service Helm Chart file
+  * ```kubectl apply -f notification-distributors.yaml``` using the file in this repo
 1. Now run Keptn pipelines and watch for the notifications in your team channel
 1. Validate cluster resources ```kubectl -n keptn get pods```.  You should see service and distributor pods.
 
@@ -145,7 +145,7 @@ You should get a HTTP 200 response code and see the notification in either Slack
 
 # Contributions
 
-You are welcome to contribute using Pull Requests. Before contributing, please read our [Contributing Guidelines](CONTRIBUTING.md).
+You are welcome to contribute using Pull Requests against the **master** branch. Before contributing, please read our [Contributing Guidelines](CONTRIBUTING.md).
 
 
 # Travis-CI setup
