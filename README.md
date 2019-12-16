@@ -55,6 +55,15 @@ All of these steps are done in Microsoft Teams client.
 
 A keptn service that forwards events on keptn channels to a Slack channel using a webhook URL. To get your Slack Webhook URL please follow the instructions here: https://api.slack.com/incoming-webhooks
 
+### Webex Teams
+
+1. Use an existing team or create a new team in the Webex Teams client
+1. Create a new space in the team
+1. Go to https://apphub.webex.com/teams/applications/incoming-webhooks-cisco-systems and login
+1. Create a Webhook by giving it a name and selecting the space you created at step 2.
+1. Copy the URL and insert it like described in 2.3
+1. You can invite members to this space or they can join by themselves
+
 ## 2. Installation of Notification Service in Keptn
 
 ### Prerequesits
