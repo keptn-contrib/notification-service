@@ -6,14 +6,14 @@ The *notificaiton-service* is a [Keptn](https://keptn.sh) service that is respon
 
 * MS Teams
 * Slack
-* Webex Teams (early access preview)
+* Webex Teams
 
 Read an overview of this service in action on MS teams in this blog:
 [Keptn now talks MS Teams: How we expand Keptn’s footprint in the Microsoft world](https://medium.com/keptn/keptn-now-talks-ms-teams-how-we-expand-keptns-footprint-in-the-microsoft-world-c330c0c8d4f1)
 
 Watch this short [YouTube video](https://youtu.be/T-qTVht4yI8) that demonstrates this setup and the Keptn notifications in action.
 
-This notification service requiers to be deployed into a Kepnt environment and subscribes 
+This notification service requiers to be deployed into a Keptn environment and subscribes 
 to the following [Keptn Cloud Events](https://github.com/keptn/spec/blob/master/cloudevents.md):
 
 * sh.keptn.event.configuration.change
