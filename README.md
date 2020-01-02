@@ -2,7 +2,7 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/keptn-contrib/notification-service)
 [![Build Status](https://travis-ci.org/keptn-contrib/notification-service.svg?branch=master)](https://travis-ci.org/keptn-contrib/notification-service)
 
-The *notificaiton-service* is a [Keptn](https://keptn.sh) service that is responsible for sending specific events as a notification to
+The *notification-service* is a [Keptn](https://keptn.sh) service that is responsible for sending specific events as a notification to
 
 * MS Teams
 * Slack
@@ -11,9 +11,9 @@ The *notificaiton-service* is a [Keptn](https://keptn.sh) service that is respon
 Read an overview of this service in action on MS teams in this blog:
 [Keptn now talks MS Teams: How we expand Keptn’s footprint in the Microsoft world](https://medium.com/keptn/keptn-now-talks-ms-teams-how-we-expand-keptns-footprint-in-the-microsoft-world-c330c0c8d4f1)
 
-Watch this short [YouTube video](https://youtu.be/T-qTVht4yI8) that demonstrates this setup and the Keptn notifications in action.
+Watch this short [YouTube video](https://youtu.be/T-qTVht4yI8) that demonstrates the setup and the Keptn notifications in action.
 
-This notification service requiers to be deployed into a Keptn environment and subscribes 
+This notification service requires to be deployed into a Keptn environment and subscribes 
 to the following [Keptn Cloud Events](https://github.com/keptn/spec/blob/master/cloudevents.md):
 
 * sh.keptn.event.configuration.change
@@ -22,7 +22,7 @@ to the following [Keptn Cloud Events](https://github.com/keptn/spec/blob/master/
 * sh.keptn.events.evaluation-done
 * sh.keptn.events.problem
 
-The service will send a notification to the configured 
+The service will send a notification to the configured notification provider (MS Teams, Slack, Webex Teams).
 
 _**NOTE: The service will not send test-finished notification if teststrategy is empty**_
 
@@ -41,7 +41,7 @@ Please always double check the version of Keptn you are using compared to the ve
 # Setup
 ## 1. Setup your Notification Provider
 
-Please set up either Microsoft Teams or Slack as described below.
+Please set up either Microsoft Teams, Slack or Webex Teams as described below.
 
 ### Microsoft Teams
 
@@ -66,7 +66,7 @@ A keptn service that forwards events on keptn channels to a Slack channel using 
 
 ## 2. Installation of Notification Service in Keptn
 
-### Prerequesits
+### Prerequisits
 * Have a cluster with [Keptn 0.6.0](https://keptn.sh/docs/0.6.0/installation/setup-keptn/) installed
 * Slack or Microsoft teams account with permission to add apps/teams/channels
 * For development: Docker for running or building new images locally 
@@ -165,6 +165,6 @@ The travis pipeline needs to be configured with the `REGISTRY_USER` and `REGISTR
 
 # Reference
 
-## Mircosoft cards
+## Microsoft cards
 * https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference
 * https://www.lee-ford.co.uk/send-message-cards-with-microsoft-teams/
