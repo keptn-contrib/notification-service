@@ -2,7 +2,6 @@ FROM node:10.16.0-alpine as production-dependencies
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install --production
-RUN npx modclean -r --no-progress
 
 FROM node:10.16.0-alpine as build-dependencies
 WORKDIR /app

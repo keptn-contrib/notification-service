@@ -34,7 +34,7 @@ Please always double check the version of Keptn you are using compared to the ve
 | Keptn Version    | [Notification Service Image](https://hub.docker.com/r/keptncontrib/notification-service/tags) |
 |:----------------:|:----------------------------------------:|
 |       0.5.x      | keptncontrib/notification-service:0.2.0  |
-|       0.6.x      | keptncontrib/notification-service:0.3.0.beta  |
+|       0.6.x      | keptncontrib/notification-service:0.3.0  |
 |      develop     | keptncontrib/notification-service:latest |
 
 
