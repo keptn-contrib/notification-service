@@ -80,7 +80,7 @@ A keptn service that forwards events on keptn channels to a Slack channel using 
     ```yaml
     containers:
     - name: notification-service
-        image: keptncontrib/notification-service:0.3.0
+        image: keptncontrib/notification-service:0.3.1
     ```
 1. Furthermore, adjust these environment variables with the webhook URL of the service you want to send notifications to. Leave the value empty if the referenced service is not being used.
     ```yaml
@@ -92,9 +92,9 @@ A keptn service that forwards events on keptn channels to a Slack channel using 
     value: ""
     ```
 1. Deploy services into cluster
-  * ```kubectl apply -f notification-service.yaml``` using the file in this repo
+  * ```kubectl apply -f notification-service.yaml -n keptn``` using the file in this repo
 1. Now run Keptn pipelines and watch for the notifications in your team channel
-1. Validate cluster resources ```kubectl -n keptn get pods```.  You should see service and distributor pods.
+1. Validate cluster resources ```kubectl -n keptn get pods```.  You should see the pod running the service.
 
 # Send notifications
 
