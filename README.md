@@ -35,6 +35,7 @@ Please always double check the version of Keptn you are using compared to the ve
 |:----------------:|:----------------------------------------:|
 |       0.5.x      | keptncontrib/notification-service:0.2.0  |
 |       0.6.x      | keptncontrib/notification-service:0.3.0  |
+|       0.7.x      | keptncontrib/notification-service:0.3.1  |
 |      develop     | keptncontrib/notification-service:latest |
 
 

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: notification-service
-        image: keptncontrib/notification-service:latest
+        image: keptncontrib/notification-service:0.3.1
         imagePullPolicy: Always
         env:
         - name: TEAMS_URL
@@ -37,6 +37,24 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
+      - name: distributor
+        image: keptn/distributor:0.7.2
+        ports:
+          - containerPort: 8080
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+          - name: PUBSUB_URL
+            value: 'nats://keptn-nats-cluster'
+          - name: PUBSUB_TOPIC
+            value: 'sh.keptn.>'
+          - name: PUBSUB_RECIPIENT
+            value: '127.0.0.1'
 ---
 apiVersion: v1
 kind: Service
@@ -51,38 +69,4 @@ spec:
       protocol: TCP
   selector:
     run: notification-service
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: notification-service-distributor
-  namespace: keptn
-spec:
-  selector:
-    matchLabels:
-      run: distributor
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        run: distributor
-    spec:
-      containers:
-        - name: distributor
-          image: keptn/distributor:0.5.0
-          ports:
-            - containerPort: 8080
-          resources:
-            requests:
-              memory: "32Mi"
-              cpu: "50m"
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
-          env:
-            - name: PUBSUB_URL
-              value: 'nats://keptn-nats-cluster'
-            - name: PUBSUB_TOPIC
-              value: 'sh.keptn.>'
-            - name: PUBSUB_RECIPIENT
-              value: 'notification-service'
+
