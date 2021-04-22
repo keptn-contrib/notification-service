@@ -2,6 +2,8 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/keptn-contrib/notification-service)
 [![Build Status](https://travis-ci.org/keptn-contrib/notification-service.svg?branch=master)](https://travis-ci.org/keptn-contrib/notification-service)
 
+## :warning: This service is currently not maintained - please reach out to the Keptn community via https://slack.keptn.sh if you want to take ownership of this repository and update it to make it work with the latest version of Keptn :warning:
+
 The *notification-service* is a [Keptn](https://keptn.sh) service that is responsible for sending specific events as a notification to
 
 * MS Teams
