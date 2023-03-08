@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^6.0.0",
-    "@nestjs/core": "^6.0.0",
+    "@nestjs/core": "^9.0.5",
     "@nestjs/platform-express": "^6.0.0",
     "@slack/webhook": "^5.0.0",
     "nest-winston": "^1.0.4",
