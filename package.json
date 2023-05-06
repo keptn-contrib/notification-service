@@ -21,10 +21,10 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "^6.0.0",
+    "@nestjs/common": "^9.4.0",
     "@nestjs/core": "^6.0.0",
     "@nestjs/platform-express": "^6.0.0",
-    "@slack/webhook": "^5.0.0",
+    "@slack/webhook": "^5.0.4",
     "nest-winston": "^1.0.4",
     "nestjs-config": "^1.4.2",
     "reflect-metadata": "^0.1.12",
